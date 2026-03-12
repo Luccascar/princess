@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Um convite especial 💖</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --bg1: #fff0f6;
+      --bg2: #ffe4ec;
+      --card: rgba(255, 255, 255, 0.92);
+      --primary: #ff4f87;
+      --primary-dark: #e63d74;
+      --text: #4a3b43;
+      --soft: #8f6d79;
+      --shadow: 0 20px 50px rgba(255, 79, 135, 0.18);
+    }
+
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.85), transparent 35%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    .glow {
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      filter: blur(55px);
+      opacity: 0.35;
+      z-index: 0;
+    }
+
+    .glow.one {
+      background: #ff9ec3;
+      top: -50px;
+      left: -60px;
+    }
+
+    .glow.two {
+      background: #ffd0e1;
+      bottom: -70px;
+      right: -50px;
+    }
+
+    .card {
+      width: min(92vw, 430px);
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.75);
+      backdrop-filter: blur(10px);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 34px 24px 30px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .emoji-top {
+      font-size: 2.4rem;
+      margin-bottom: 10px;
+      animation: float 2.5s ease-in-out infinite;
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 5vw, 2.3rem);
+      color: var(--primary-dark);
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+
+    p.subtitle {
+      font-size: 1rem;
+      color: var(--soft);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .buttons-area {
+      position: relative;
+      width: 100%;
+      height: 185px;
+      margin-top: 8px;
+    }
+
+    #yesBtn,
+    #noBtn {
+      border: none;
+      border-radius: 999px;
+      padding: 14px 24px;
+      min-width: 138px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+      box-shadow: 0 12px 22px rgba(0,0,0,0.08);
+      position: absolute;
+    }
+
+    #yesBtn:active,
+    #noBtn:active {
+      transform: scale(0.97);
+    }
+
+    #yesBtn {
+      background: linear-gradient(135deg, var(--primary), #ff6ca0);
+      color: white;
+      left: 50%;
+      top: 24px;
+      transform: translateX(-50%);
+    }
+
+    #yesBtn:hover {
+      box-shadow: 0 16px 28px rgba(255,79,135,0.28);
+    }
+
+    #noBtn {
+      background: rgba(255,255,255,0.97);
+      color: var(--primary-dark);
+      border: 2px solid #ffc0d6;
+      left: 50%;
+      top: 98px;
+      transform: translateX(-50%);
+      font-size: 0.95rem;
+    }
+
+    .result {
+      display: none;
+      animation: fadeUp 0.6s ease;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .result h2 {
+      font-size: clamp(1.65rem, 4.8vw, 2rem);
+      color: var(--primary-dark);
+      margin-bottom: 14px;
+    }
+
+    .result p {
+      color: var(--text);
+      font-size: 1.02rem;
+      line-height: 1.65;
+    }
+
+    .hearts {
+      margin-top: 16px;
+      font-size: 1.6rem;
+      letter-spacing: 6px;
+      animation: pulse 1.4s infinite;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 16px;
+      top: -20px;
+      opacity: 0.95;
+      z-index: 5;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    @media (max-width: 520px) {
+      .card {
+        padding: 30px 20px 26px;
+        border-radius: 24px;
+      }
+
+      .buttons-area {
+        height: 205px;
+      }
+
+      #yesBtn,
+      #noBtn {
+        min-width: 140px;
+      }
+
+      #noBtn {
+        font-size: 0.9rem;
+        padding: 13px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow one"></div>
+  <div class="glow two"></div>
+
+  <main class="card">
+    <div class="emoji-top">💌</div>
+
+    <div id="questionBox">
+      <h1>Você quer sair comigo?</h1>
+      <p class="subtitle">
+        Prometo um bom café, choclate e alguns sorrisos sinceros.
+        Aceita esse convite especial? ✨
+      </p>
+
+      <div class="buttons-area">
+        <button id="yesBtn">Sim 💖</button>
+        <button id="noBtn">Não 😅</button>
+      </div>
+    </div>
+
+    <div class="result" id="result">
+      <h2>Aaaah, eu sabia! 🥰</h2>
+      <div class="hearts">💖 💕 💘 💗</div>
+    </div>
+  </main>
+
+  <script>
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const result = document.getElementById("result");
+    const questionBox = document.getElementById("questionBox");
+
+    const positions = [
+      { left: "50%", top: "98px", transform: "translateX(-50%)" },
+      { left: "8%", top: "98px", transform: "none" },
+      { right: "8%", top: "98px", transform: "none" },
+      { left: "14%", top: "138px", transform: "none" },
+      { right: "14%", top: "138px", transform: "none" },
+      { left: "50%", top: "138px", transform: "translateX(-50%)" },
+      { left: "22%", top: "98px", transform: "none" },
+      { right: "22%", top: "98px", transform: "none" }
+    ];
+
+    const noTexts = [
+      "Não 😅",
+      "Tem certeza? 🥺",
+      "Pensa melhor 💭",
+      "Vai, diz sim ✨",
+      "Talvez sim? 💖",
+      "Só um cafezinho ☕",
+      "Prometo ser legal 😌",
+      "Dá uma chance 💘"
+    ];
+
+    let lastPositionIndex = 0;
+    let textIndex = 0;
+
+    function moveNoButton() {
+      let nextIndex;
+      do {
+        nextIndex = Math.floor(Math.random() * positions.length);
+      } while (nextIndex === lastPositionIndex);
+
+      lastPositionIndex = nextIndex;
+      const pos = positions[nextIndex];
+
+      noBtn.style.left = "auto";
+      noBtn.style.right = "auto";
+      noBtn.style.top = pos.top;
+      noBtn.style.transform = pos.transform;
+
+      if (pos.left) noBtn.style.left = pos.left;
+      if (pos.right) noBtn.style.right = pos.right;
+
+      textIndex = (textIndex + 1) % noTexts.length;
+      noBtn.textContent = noTexts[textIndex];
+    }
+
+    noBtn.addEventListener("mouseenter", moveNoButton);
+
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      moveNoButton();
+    }, { passive: false });
+
+    noBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      moveNoButton();
+    });
+
+    yesBtn.addEventListener("click", () => {
+      questionBox.classList.add("hidden");
+      result.classList.add("show");
+      launchConfetti();
+    });
+
+    function launchConfetti() {
+      for (let i = 0; i < 140; i++) {
+        const piece = document.createElement("div");
+        piece.className = "confetti";
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.animationDuration = (Math.random() * 2 + 2.2) + "s";
+        piece.style.background = `hsl(${Math.random() * 360}, 90%, 65%)`;
+        piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 5000);
+      }
+    }
+  </script>
+</body>
+</html>
